@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.listaAlbuns{
+    
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+    column-gap: 3%;
+    background-color:transparent;
+    
+    
+
+}
+.album{
+    cursor: pointer;
+    width:20%;
+    background-color: #212529;
+    color: #899095;
+    display: flex;
+    border-radius:10px ;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+    border: 1px solid black;;   
+}
+
+
+
+.album h2 {
+    width: 100%;
+    font-size: 20px;
+    margin: 10px;
+    text-align: center;
+}
+
+/* Estilos no seu arquivo CSS */
+.album {
+    /* Estilos para o container do álbum */
+    margin: 10px;
+    text-align: center;
+    position: relative; /* Permite posicionar o ícone de reprodução */
+  }
+  
+  .albumImageWrapper {
+    position: relative; /* Permite posicionar o ícone de reprodução dentro deste elemento */
+  }
+  
+  .playIcon {
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; /* Tornar o ícone de reprodução inicialmente invisível */
+    transition: opacity 0.3s; /* Adicionar uma transição suave */
+  }
+  
+  .albumImageWrapper:hover .playIcon {
+    opacity: 3; /* Tornar o ícone de reprodução visível no hover */
+  }
+  
