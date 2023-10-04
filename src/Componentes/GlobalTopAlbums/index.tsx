@@ -46,11 +46,31 @@ const ButtonExite = styled.button`
   border-radius: 5px;
 `;
 
-function TopBrazilianAlbums() {
-  const [albums, setAlbums] = useState([]);
-  const [selectedAlbum, setSelectedAlbum] = useState(null);
-  const [albumInfo, setAlbumInfo] = useState(null);
+// Interfaces para definir tipos de dados
+interface Album {
+  name: string;
+  artist: string;
+  image: { '#text': string }[];
+}
 
+interface Track {
+  name: string;
+}
+
+interface AlbumInfo {
+  name: string;
+  artist: string;
+  listeners: string;
+  tracks: { track: Track[] };
+}
+
+function TopBrazilianAlbums() {
+  // Estados para armazenar informações dos álbuns
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
+  const [albumInfo, setAlbumInfo] = useState<AlbumInfo | null>(null);
+
+  // useEffect para buscar os álbuns mais populares no Brasil
   useEffect(() => {
     async function getTopBrazilianAlbums() {
       try {
@@ -61,7 +81,7 @@ function TopBrazilianAlbums() {
           const topTracks = response.tracks.track;
 
           // Cria um conjunto (set) para armazenar os álbuns únicos
-          const uniqueAlbums = new Set();
+          const uniqueAlbums = new Set<Album>();
 
           // Para cada faixa, busca o álbum ao qual ela pertence
           for (const track of topTracks) {
@@ -90,8 +110,9 @@ function TopBrazilianAlbums() {
     }
 
     getTopBrazilianAlbums();
-  }, []);
+  }, []); // O segundo argumento vazio [] indica que esse efeito só é executado uma vez, semelhante ao componentDidMount.
 
+  // useEffect para buscar informações detalhadas de um álbum quando selecionado
   useEffect(() => {
     async function fetchAlbumInfo() {
       try {
@@ -115,12 +136,14 @@ function TopBrazilianAlbums() {
     }
 
     fetchAlbumInfo();
-  }, [selectedAlbum]);
+  }, [selectedAlbum]); // Este efeito é executado sempre que o estado selectedAlbum muda.
 
-  const handleAlbumClick = (album) => {
+  // Função para lidar com o clique em um álbum
+  const handleAlbumClick = (album: Album) => {
     setSelectedAlbum(album);
   };
 
+  // Função para fechar o modal de detalhes do álbum
   const handleCloseModal = () => {
     setSelectedAlbum(null);
     setAlbumInfo(null);
@@ -129,7 +152,7 @@ function TopBrazilianAlbums() {
   return (
     <div>
       <ul className={style.listaAlbuns}>
-        <h2 className='h1 w-100'>Albuns com as principais musicas mais ouvidas no Brasil</h2>
+        <h2 className='h1 w-100'>Albuns com as principais músicas mais ouvidas no Brasil</h2>
         {albums.map((album) => (
           <div
             className={style.album}
